@@ -343,7 +343,7 @@ Languages:
                     if name in self._exclude_langs: continue
                         
                     # collect repo data
-                    repo_lang_data.append({'repo_name':repo.get("nameWithOwner"), 'lang': name 'size': lang.get("size", 0)})
+                    repo_lang_data.append({'repo_name':repo.get("nameWithOwner"), 'lang': name, 'size': lang.get("size", 0)})
 
                     
                     if name in languages:
