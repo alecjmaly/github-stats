@@ -328,11 +328,19 @@ Languages:
                 if self._include_only_owned_repos and not name.startswith(f"{self.username}/"):
                     continue
 
+                # output repo name
+                print(name)
+                    
                 self._repos.add(name)
                 self._stargazers += repo.get("stargazers").get("totalCount", 0)
                 self._forks += repo.get("forkCount", 0)
 
                 for lang in repo.get("languages", {}).get("edges", []):
+                    
+
+                    # output repo name
+                    print(lang)
+                    
                     name = lang.get("node", {}).get("name", "Other")
                     languages = await self.languages
                     if name in self._exclude_langs: continue
