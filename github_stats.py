@@ -337,14 +337,15 @@ Languages:
                 self._stargazers += repo.get("stargazers").get("totalCount", 0)
                 self._forks += repo.get("forkCount", 0)
 
-                for lang in repo.get("languages", {}).get("edges", []):
-                    # collect repo data
-                    repo_lang_data.append({'repo_name':name, 'lang': lang.get("node", {}).get("name", "Other"), 'size': lang.get("size", 0)})
-
-                    
+                for lang in repo.get("languages", {}).get("edges", []):                    
                     name = lang.get("node", {}).get("name", "Other")
                     languages = await self.languages
                     if name in self._exclude_langs: continue
+                        
+                    # collect repo data
+                    repo_lang_data.append({'repo_name':repo.get("nameWithOwner"), 'lang': name 'size': lang.get("size", 0)})
+
+                    
                     if name in languages:
                         languages[name]["size"] += lang.get("size", 0)
                         languages[name]["occurrences"] += 1
