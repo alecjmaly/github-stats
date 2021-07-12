@@ -328,18 +328,18 @@ Languages:
                 if self._include_only_owned_repos and not name.startswith(f"{self.username}/"):
                     continue
 
-                # output repo name
-                print(name)
+                    
+                # variable to collect data
+                repo_lang_data = []
                     
                 self._repos.add(name)
                 self._stargazers += repo.get("stargazers").get("totalCount", 0)
                 self._forks += repo.get("forkCount", 0)
 
                 for lang in repo.get("languages", {}).get("edges", []):
-                    
+                    # collect repo data
+                    repo_lang_data.append({'repo_name':name, 'lang': lang.get("node", {}).get("name", "Other"), 'size': lang.get("size", 0)})
 
-                    # output repo name
-                    print(lang)
                     
                     name = lang.get("node", {}).get("name", "Other")
                     languages = await self.languages
@@ -364,6 +364,9 @@ Languages:
                                 .get("endCursor", next_contrib))
             else:
                 break
+
+        # print repo data in logs
+        [print(x) for x in sorted(repo_lang_data, reverse=True, key=lambda t: t['size'])]        
 
         # TODO: Improve languages to scale by number of contributions to
         #       specific filetypes
