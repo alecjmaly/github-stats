@@ -319,6 +319,11 @@ Languages:
             if not self._ignore_forked_repos:
                 repos += contrib_repos.get("nodes", [])
 
+
+            # variable to collect data
+            repo_lang_data = []
+
+
             for repo in repos:
                 if repo is None:
                     continue
@@ -327,10 +332,6 @@ Languages:
                     continue
                 if self._include_only_owned_repos and not name.startswith(f"{self.username}/"):
                     continue
-
-                    
-                # variable to collect data
-                repo_lang_data = []
                     
                 self._repos.add(name)
                 self._stargazers += repo.get("stargazers").get("totalCount", 0)
