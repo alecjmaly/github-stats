@@ -238,9 +238,12 @@ class Stats(object):
                  session: aiohttp.ClientSession,
                  exclude_repos: Optional[Set] = None,
                  exclude_langs: Optional[Set] = None,
-                 ignore_forked_repos: bool = False):
+                 ignore_forked_repos: bool = False,
+                 include_only_owned_repos: bool = False
+                 ):
         self.username = username
         self._ignore_forked_repos = ignore_forked_repos
+        self._include_only_owned_repos = include_only_owned_repos
         self._exclude_repos = set() if exclude_repos is None else exclude_repos
         self._exclude_langs = set() if exclude_langs is None else exclude_langs
         self.queries = Queries(username, access_token, session)
@@ -322,6 +325,9 @@ Languages:
                 name = repo.get("nameWithOwner")
                 if name in self._repos or name in self._exclude_repos:
                     continue
+                if self._include_only_owned_repos and ! name.startswith(f"{self.username}/")
+                    continue
+                    
                 self._repos.add(name)
                 self._stargazers += repo.get("stargazers").get("totalCount", 0)
                 self._forks += repo.get("forkCount", 0)

@@ -111,10 +111,18 @@ async def main() -> None:
     ignore_forked_repos = os.getenv("EXCLUDE_FORKED_REPOS")
     ignore_forked_repos = (not not ignore_forked_repos 
                            and ignore_forked_repos.strip().lower() != "false")
+    include_only_owned_repos = os.getenv("INCLUDE_ONLY_OWNED_REPOS")
+    include_only_owned_repos = (not not include_only_owned_repos 
+                           and include_only_owned_repos.strip().lower() != "false")
+    
+
+
     async with aiohttp.ClientSession() as session:
         s = Stats(user, access_token, session, exclude_repos=exclude_repos,
                   exclude_langs=exclude_langs,
-                  ignore_forked_repos=ignore_forked_repos)
+                  ignore_forked_repos=ignore_forked_repos,
+                  include_only_owned_repos=include_only_owned_repos
+                  )
         await asyncio.gather(generate_languages(s), generate_overview(s))
 
 if __name__ == "__main__":

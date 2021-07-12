@@ -56,6 +56,7 @@ jobs:
         EXCLUDED: ${{ secrets.EXCLUDED }}
         EXCLUDED_LANGS: ${{ secrets.EXCLUDED_LANGS }}
         EXCLUDE_FORKED_REPOS: true
+        INCLUDE_ONLY_OWNED_REPOS: true
 
     # Commits all changed files to the repository
     - name: Commit to the repo
